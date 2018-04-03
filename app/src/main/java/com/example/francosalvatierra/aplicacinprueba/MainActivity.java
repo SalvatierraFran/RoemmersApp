@@ -15,7 +15,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+
 import org.w3c.dom.Text;
+
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,15 +64,21 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.mShare:
-                Intent i = new Intent(
+                /*Intent i = new Intent(
                         Intent.ACTION_ALL_APPS);
                 i.setType("text/plain");
                 i.putExtra(
                         android.content.Intent.EXTRA_TEXT, "My new app https://play.google.com/store/search?q=TECHHUBINDIAN");
                 startActivity(Intent.createChooser(
                         i,
-                        "Share Via"));
-                break;
+                        "Share Via"));*/
+                new MaterialFilePicker()
+                        .withActivity(MainActivity.this)
+                        .withRequestCode(1)
+                        .withFilter(Pattern.compile(".*\\.txt$")) // Filtering files and directories by file name using regexp
+                        .withFilterDirectories(true) // Set directories filterable (false by default)
+                        .withHiddenFiles(true) // Show hidden files and folders
+                        .start();
         }
 
         Toast.makeText(getApplicationContext(), "You click on menu share", Toast.LENGTH_LONG).show();
